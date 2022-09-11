@@ -125,19 +125,19 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[args[0]]()
-        for kwarg in args[2].split(" "):
-            name, value = kwarg.split('=')
-            if re.match(r"(?:\\.|[^\"])*", value):
-                value = value.replace('_', ' ')
-                value = value.replace("\\", '')
-            elif value.isdigit():
-                value = int(value)
-            elif re.match(r"^-?\d+\.\d+$", value):
-                value = float(value)
-            else:
-                continue
-            setattr(new_instance, name, value)
-        storage.save()
+        if args[2]:
+            for kwarg in args[2].split(" "):
+                name, value = kwarg.split('=')
+                if value[0] == '"':
+                    value = value.strip('"').replace("_", " ")
+                else:
+                    if value.isdigit():
+                        value = int(value)
+                    elif re.match(r"^-?\d+\.\d+$", value):
+                        value = float(value)
+                    else:
+                        continue
+                setattr(new_instance, name, value)
         print(new_instance.id)
         storage.save()
 
