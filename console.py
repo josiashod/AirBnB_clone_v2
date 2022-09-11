@@ -127,12 +127,12 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[args[0]]()
         for kwarg in args[2].split(" "):
             name, value = kwarg.split('=')
-            if re.match('(?:\\.|[^"])*', value):
+            if re.match(r"(?:\\.|[^\"])*", value):
                 value = value.replace('_', ' ')
-                value = value.replace('\\', '')
+                value = value.replace("\\", '')
             elif value.isdigit():
                 value = int(value)
-            elif re.match('^-?\d+\.\d+$', value):
+            elif re.match(r"^-?\d+\.\d+$", value):
                 value = float(value)
             else:
                 continue
@@ -334,6 +334,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
