@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             for kwarg in args[2].split(" "):
                 name, value = kwarg.split('=')
                 if value[0] == '"':
-                    value = value.strip('"').replace("_", " ")
+                    value = value.strip('"').replace("_", " ").replace("\\", "")
                 else:
                     if value.isdigit():
                         value = int(value)
