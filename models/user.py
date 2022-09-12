@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 
 class User(BaseModel, Base):
     """Represents a user for a MySQL database.
-    
+
     Inherits from SQLAlchemy Base and links to the MySQL table users.
     Attributes:
         __tablename__ (str): The name of the MySQL table to store users.
