@@ -129,7 +129,8 @@ class HBNBCommand(cmd.Cmd):
             for kwarg in args[2].split(" "):
                 name, value = kwarg.split('=')
                 if value[0] == '"':
-                    value = value.strip('"').replace("_", " ").replace("\\", "")
+                    value = (value.strip('"').replace("_", " ")
+                             .replace("\\", ""))
                 else:
                     if value.isdigit():
                         value = int(value)
@@ -202,7 +203,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
