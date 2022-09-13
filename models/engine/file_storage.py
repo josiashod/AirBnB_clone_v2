@@ -21,12 +21,12 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            json.dump(temp, f)
+        __objects = FileStorage.__objects
+        objects_dict = {
+            key: __objects[key].to_dict() for key in __objects.keys()
+        }
+        with open(FileStorage.__file_path, "w") as f:
+            f.write(json.dumps(objects_dict))
 
     def delete(self, obj=None):
         """Deletes obj if it's inside the attribute __objects"""
