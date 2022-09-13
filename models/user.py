@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 """This module defines a class User"""
+import os
 from models.base_model import BaseModel
 from models.base_model import Base
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy.orm import relationship
+
+HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
 
 class User(BaseModel, Base):
