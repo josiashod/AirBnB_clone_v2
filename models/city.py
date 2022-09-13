@@ -12,10 +12,5 @@ class City(BaseModel, Base):
     """ The city class, contains state ID and name """
 
     __tablename__ = "cities"
-
-    if HBNB_TYPE_STORAGE == "db":
-        state_id = Column(String(60), ForeignKey(State.id))
-        name = Column(String(128))
-    else:
-        name = ""
-        state_id = ""
+    state_id = Column(String(60), ForeignKey(State.id))
+    name = Column(String(128))
