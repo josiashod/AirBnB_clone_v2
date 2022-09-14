@@ -7,8 +7,6 @@ from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy.orm import relationship
 
-HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
-
 
 class User(BaseModel, Base):
     """Represents a user for a MySQL database.
