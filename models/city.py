@@ -3,8 +3,6 @@
 import os
 from models.base_model import BaseModel
 from models.base_model import Base
-from models.state import State
-from models.place import Place
 from sqlalchemy import Column, String, ForeignKey
 
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
