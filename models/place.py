@@ -63,7 +63,7 @@ class Place(BaseModel, Base):
                                cascade='all, delete-orphan')
         amenities = relationship('Amenity',
                                  secondary='place_amenity',
-                                 backref='place', viewonly=False)
+                                 viewonly=False)
     else:
         @property
         def reviews(self):
