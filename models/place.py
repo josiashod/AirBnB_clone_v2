@@ -70,9 +70,12 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """Getter attribute in case of file storage"""
-            return [amenity for amenity in models.storage.all(Amenity)
-                    if amenity.id in self.amenity_ids]
+            """Get linked Amenities."""
+            amenity_list = []
+            for amenity in list(models.storage.all(Amenity).values()):
+                if amenity.id in self.amenity_ids:
+                    amenity_list.append(amenity)
+            return amenity_list
 
         @amenities.setter
         def amenities(self, obj):
