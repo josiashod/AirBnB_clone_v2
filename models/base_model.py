@@ -58,10 +58,6 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def delete(self):
-        """Deletes the current instance from storage"""
-        models.storage.delete(self)
-
     def to_dict(self):
         """Convert instance into dict format"""
         dictionary = {}
@@ -80,3 +76,7 @@ class BaseModel:
             dictionary['updated_at'] = self.updated_at.strftime(
                 '%Y-%m-%dT%H:%M:%S.%f')
         return dictionary
+    
+    def delete(self):
+        """Deletes the current instance from storage"""
+        models.storage.delete(self)
