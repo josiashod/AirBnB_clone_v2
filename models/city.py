@@ -11,6 +11,6 @@ class City(BaseModel, Base):
     """ The city class, contains state ID and name """
 
     __tablename__ = "cities"
-    state_id = Column(String(60), ForeignKey(states.id), nullable=False)
+    state_id = Column(String(60), ForeignKey(State.id), nullable=False)
     name = Column(String(128), nullable=False)
     places = relationship("Place", backref="cities", cascade="delete")
