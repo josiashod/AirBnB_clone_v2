@@ -16,8 +16,8 @@ from models.amenity import Amenity
 
 HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
-
-association_table = Table("place_amenity", Base.metadata,
+if HBNB_TYPE_STORAGE == "db":
+place_amenity = Table("place_amenity", Base.metadata,
                           Column("place_id", String(60),
                                  ForeignKey('places.id'),
                                  primary_key=True, nullable=False),
@@ -61,26 +61,27 @@ class Place(BaseModel, Base):
                              viewonly=False)
     amenity_ids = []
 
-    if HBNB_TYPE_STORAGE != "db":
+    if HBNB_TYPE_STORAGE == "db":
+        reviews = relationship('Review', backref='place',
+                               cascade='all, delete-orphan')
+        amenities = relationship('Amenity',
+                                 secondary='place_amenity',
+                                 backref='places', viewonly=False)
+    else:
         @property
         def reviews(self):
-            """Get a list of all linked Reviews."""
-            review_list = []
-            for review in list(models.storage.all(Review).values()):
-                if review.place_id == self.id:
-                    review_list.append(review)
-            return review_list
+            """Getter attribute in case of file storage"""
+            return [review for review in models.storage.all(Review)
+                    if review.place_id == self.id]
 
         @property
         def amenities(self):
-            """Get/set linked Amenities."""
-            amenity_list = []
-            for amenity in list(models.storage.all(Amenity).values()):
-                if amenity.id in self.amenity_ids:
-                    amenity_list.append(amenity)
-            return amenity_list
+            """Getter attribute in case of file storage"""
+            return [amenity for amenity in models.storage.all(Amenity)
+                    if amenity.id in self.amenity_ids]
 
         @amenities.setter
-        def amenities(self, value):
-            if type(value) == Amenity:
-                self.amenity_ids.append(value.id)
+        def amenities(self, obj):
+            """Setter method for amenities"""
+            if (type(obj) == Amenity):
+                self.amenity_ids.append(obj.id)
