@@ -19,10 +19,10 @@ HBNB_TYPE_STORAGE = os.getenv("HBNB_TYPE_STORAGE")
 
 association_table = Table("place_amenity", Base.metadata,
                           Column("place_id", String(60),
-                                 ForeignKey(Place.id),
+                                 ForeignKey('places.id'),
                                  primary_key=True, nullable=False),
                           Column("amenity_id", String(60),
-                                 ForeignKey(Amenity.id),
+                                 ForeignKey('amenities.id'),
                                  primary_key=True, nullable=False))
 
 
@@ -46,8 +46,8 @@ class Place(BaseModel, Base):
         amenity_ids (list): An id list of all linked amenities.
     """
     __tablename__ = "places"
-    city_id = Column(String(60), ForeignKey(City.id), nullable=False)
-    user_id = Column(String(60), ForeignKey(User.id), nullable=False)
+    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
     description = Column(String(1024))
     number_rooms = Column(Integer, default=0)
