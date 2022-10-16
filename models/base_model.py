@@ -41,8 +41,8 @@ class BaseModel:
                         setattr(self, key, datetime.fromisoformat(value))
                     else:
                         setattr(self, key, value)
-
-            del kwargs['__class__']
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
             self.__dict__.update(kwargs)
 
     def __str__(self):
@@ -62,19 +62,20 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = {}
 
-        if '_sa_instance_state' in self.__dict__:
-            del self.__dict__['_sa_instance_state']
-
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
-        if type(self.created_at) != str:
+
+        if type(self.created_at) != str and self.created_at:
             dictionary['created_at'] = self.created_at.strftime(
                 '%Y-%m-%dT%H:%M:%S.%f')
 
-        if type(self.updated_at) != str:
+        if type(self.updated_at) != str and self.updated_at:
             dictionary['updated_at'] = self.updated_at.strftime(
                 '%Y-%m-%dT%H:%M:%S.%f')
+        if '_sa_instance_state' in self.__dict__:
+            del dictionary['_sa_instance_state']
+
         return dictionary
 
     def delete(self):
